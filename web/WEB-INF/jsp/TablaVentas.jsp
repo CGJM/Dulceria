@@ -1,6 +1,6 @@
 <%-- 
-    Document   : AccionUsuarios
-    Created on : 9/08/2019, 09:18:04 AM
+    Document   : TablaVentas
+    Created on : 18/08/2019, 01:55:31 AM
     Author     : crist
 --%>
 
@@ -17,7 +17,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 
-        <title>Accion Registro</title>
+        <title>Accion almacen</title>
     </head>
     <body class="text-center">
         <style>
@@ -74,7 +74,7 @@
         </nav>
         <p>
             <br>
-        <h1>Usuarios</h1>
+        <h1>Ventas</h1>
     </p>
     <%
         Connection cn;
@@ -85,30 +85,9 @@
             cn=c.inicializa();
             if (cn != null) {
                 Statement sta = cn.createStatement();
-                ResultSet res = sta.executeQuery("Select * from Registro");
-
+                ResultSet res = sta.executeQuery("Select * from Ventas");
+                
     %>  
-    <form class="form-inline my-2 my-lg-0">
-        <div class="container col-sm-6">
-            <input class="form-control mr-sm-2" name="busqueda" type="search" placeholder="Search" aria-label="Search">
-            <input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="Buscar"></input>
-
-        </div>
-    </form>
-    <%        String nobusc = request.getParameter("busqueda");
-        if (nobusc != null) {
-
-            try {
-            cn=c.inicializa();
-                if (cn != null) {
-                    Statement st = cn.createStatement();
-                    res = st.executeQuery("select * from Registro where Nombre like '%" + nobusc + "%'");
-                }
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }
-    %>
     <br> 
     <br> 
     <div  class="table-responsive row d-flex justify-content-center " >
@@ -116,32 +95,21 @@
         <table class="table table-bordered table-hover col-md-9 centered" >
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Apellido</th>
-                    <th scope="col">Usuario</th>
-                    <th scope="col">Clave</th>
-                    <th scope="col">Puesto</th>
-                    <th scope="col">Modificar</th>
-                    <th scope="col">Eliminar</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Codigo</th>
                 </tr>
             </thead>
             <tbody >
                 <%  while (res.next()) {%>
                 <tr >
 
-                    <td ><%= res.getString("Id")%></td>
-                    <td><%= res.getString("Nombre")%></td>
-                    <td><%= res.getString("Apellido")%></td>
-                    <td><%= res.getString("Usuario")%></td>
-                    <td><%= res.getString("Clave")%></td>
-                    <td><%= res.getString("Puesto")%></td>
-                    <td>
-                        <a href="Edicion?id=<%= res.getString("Id")%>" class="btn btn-info">Modificar</a>
-                    </td>
-                    <td>
-                        <a href="CambiosRegistros?id=<%= res.getString("Id")%>" class="btn btn-danger">Eliminar</a>
-                    </td>
+                    <td ><%= res.getString("Producto")%></input></td>
+                    <td><%= res.getString("Cantidad")%></td>
+                    <td><%= res.getString("Total")%></td>
+                    <td><%= res.getString("Codigo")%></td>
+                  
 
                 </tr>
                 <% }

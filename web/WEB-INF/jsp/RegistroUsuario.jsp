@@ -1,11 +1,9 @@
 <%-- 
-    Document   : AccionUsuarios
-    Created on : 9/08/2019, 09:18:04 AM
+    Document   : RegistroUsuario
+    Created on : 17/08/2019, 10:52:56 PM
     Author     : crist
 --%>
 
-<%@page import="dulceria_53.Conexion"%>
-<%@page import="java.sql.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,9 +13,7 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-
-        <title>Accion Registro</title>
+        <title>Registrar producto</title>
     </head>
     <body class="text-center">
         <style>
@@ -72,88 +68,25 @@
                 </form>
             </div>
         </nav>
-        <p>
-            <br>
-        <h1>Usuarios</h1>
-    </p>
-    <%
-        Connection cn;
+        <h1>Registro de usuarios</h1>
+        <form class="form-signin"  method="POST" action="InsertarUsuario">
+            <div class="form-group container col-md-3">
 
-        try {
-            
-            Conexion c=new Conexion();
-            cn=c.inicializa();
-            if (cn != null) {
-                Statement sta = cn.createStatement();
-                ResultSet res = sta.executeQuery("Select * from Registro");
+                <input class="form-control" placeholder="ID personal" type="text" name="idU"><br>
+                <input class="form-control" placeholder="Nombre"type="text" name="nombre"><br>
+                <input class="form-control" placeholder="Apellido" type="text" name="apellido"><br>
+                <input  class="form-control" placeholder="Usuario" type="text" name="usuario"><br>
+                <input  class="form-control" placeholder="Clave" type="text" name="clave"><br>
+                Seleccionar:<SELECT NAME="selCombo" SIZE=1 > 
+                    <OPTION VALUE="Administrador">Administrador</OPTION>
+                    <OPTION VALUE="Empleado">Empleado</OPTION>
+                    <OPTION VALUE="Gerente">Gerente</OPTION>
+                </SELECT><br>
+                <input type="file" class="form-control-file" name="imagen" id="exampleFormControlFile1">
+                <input type="submit" name="accion" class="btn btn-primary" value="Accion">
+            </div>
+        </form>
 
-    %>  
-    <form class="form-inline my-2 my-lg-0">
-        <div class="container col-sm-6">
-            <input class="form-control mr-sm-2" name="busqueda" type="search" placeholder="Search" aria-label="Search">
-            <input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="Buscar"></input>
-
-        </div>
-    </form>
-    <%        String nobusc = request.getParameter("busqueda");
-        if (nobusc != null) {
-
-            try {
-            cn=c.inicializa();
-                if (cn != null) {
-                    Statement st = cn.createStatement();
-                    res = st.executeQuery("select * from Registro where Nombre like '%" + nobusc + "%'");
-                }
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }
-    %>
-    <br> 
-    <br> 
-    <div  class="table-responsive row d-flex justify-content-center " >
-
-        <table class="table table-bordered table-hover col-md-9 centered" >
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Apellido</th>
-                    <th scope="col">Usuario</th>
-                    <th scope="col">Clave</th>
-                    <th scope="col">Puesto</th>
-                    <th scope="col">Modificar</th>
-                    <th scope="col">Eliminar</th>
-                </tr>
-            </thead>
-            <tbody >
-                <%  while (res.next()) {%>
-                <tr >
-
-                    <td ><%= res.getString("Id")%></td>
-                    <td><%= res.getString("Nombre")%></td>
-                    <td><%= res.getString("Apellido")%></td>
-                    <td><%= res.getString("Usuario")%></td>
-                    <td><%= res.getString("Clave")%></td>
-                    <td><%= res.getString("Puesto")%></td>
-                    <td>
-                        <a href="Edicion?id=<%= res.getString("Id")%>" class="btn btn-info">Modificar</a>
-                    </td>
-                    <td>
-                        <a href="CambiosRegistros?id=<%= res.getString("Id")%>" class="btn btn-danger">Eliminar</a>
-                    </td>
-
-                </tr>
-                <% }
-                        }
-                    } catch (Exception e) {
-                        out.print(e);
-                    }%>
-            </tbody>
-        </table>
-
-    </div >
-
-
-</body>
+    </body>
 </html>
+

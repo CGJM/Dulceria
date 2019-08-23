@@ -7,6 +7,7 @@ package dulceria_53;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,27 +20,24 @@ import javax.swing.JOptionPane;
 public class Registro {
     
     private Empleado usuario;
-    private Connection cn;
+    Connection cn;
     
     public boolean Alta(Empleado ingresado){
         usuario=ingresado;
         boolean resultado = false;
         try {
-            //1. Conexión con la base de datos
-            Statement st;
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            cn = DriverManager.getConnection("jdbc:mysql://localhost/"+Conexion.nombreBD+"?serverTimezone=UTC", Conexion.usuario, Conexion.clave);
-            //2. Definición de la instrucción
-            st = cn.createStatement();
+            //1. Conexión con la base d
+            
+            Conexion c=new Conexion();
+            cn=c.inicializa();
             String tsql = "INSERT INTO Registro values ('"+usuario.getIdEmpleado()+"','"+usuario.getNombre()+"','"+usuario.getApellido()+
                         "','"+usuario.getUsuario()+"','"+usuario.getClave()+"','"+usuario.getPuesto()+"','"+usuario.getFoto()+"');";
-            //3. Ejecución de la instrucción
-            resultado = st.execute(tsql);
+            PreparedStatement s = cn.prepareStatement(tsql);
+            s.executeUpdate();
             //4. Cierre de la conexión
-            cn.close();
             return true;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al insertar "+e);
+            System.out.println(""+e);
             return false;
         }
     }
@@ -50,9 +48,6 @@ public class Registro {
         try {
             //1. Conexión con la base de datos
             Statement st;
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            cn = DriverManager.getConnection("jdbc:mysql://localhost/"+Conexion.nombreBD+"?serverTimezone=UTC", Conexion.usuario, Conexion.clave);
-            //2. Definición de la instrucción
             st = cn.createStatement();
             String tsql = "DELETE FROM  Registro WHERE ID = '"+ condicion
                     +"';";
@@ -71,9 +66,6 @@ public class Registro {
         try {
             //1. Conexión con la base de datos
             Statement st;
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            cn = DriverManager.getConnection("jdbc:mysql://localhost/"+Conexion.nombreBD+"?serverTimezone=UTC", Conexion.usuario, Conexion.clave);
-            //2. Definición de la instrucción
             st = cn.createStatement();
             String tsql = "UPDATE Registro SET ID ='" + id +"',Nombre ='"+ nombre +"', Apellido='"+apellido+"', Usuario ='"+usuario+"',Clave ='"+ clave+ 
                     "', Puesto='"+puesto+"' WHERE ID = '"+ condicion +"';";
@@ -92,9 +84,6 @@ public class Registro {
         ResultSet resultado = null;
         try {           
             Statement st;
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            cn = DriverManager.getConnection("jdbc:mysql://localhost/"+Conexion.nombreBD+"?serverTimezone=UTC", Conexion.usuario, Conexion.clave);
-            //2. Definición de la instrucción
             st = cn.createStatement();
             String tsql = "SELECT * FROM Registro where ID='"+parametro+"';";
             //3. Ejecución de la instrucción
@@ -112,9 +101,6 @@ public class Registro {
         ResultSet resultado = null;
         try {           
             Statement st;
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            cn = DriverManager.getConnection("jdbc:mysql://localhost/"+Conexion.nombreBD+"?serverTimezone=UTC", Conexion.usuario, Conexion.clave);
-            //2. Definición de la instrucción
             st = cn.createStatement();
             String tsql = "SELECT ID FROM Registro;";
             //3. Ejecución de la instrucción
@@ -130,9 +116,6 @@ public class Registro {
         ResultSet resultado = null;
         try {           
             Statement st;
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            cn = DriverManager.getConnection("jdbc:mysql://localhost/"+Conexion.nombreBD+"?serverTimezone=UTC", Conexion.usuario, Conexion.clave);
-            //2. Definición de la instrucción
             st = cn.createStatement();
             String tsql = "SELECT * FROM Registro;";
             //3. Ejecución de la instrucción

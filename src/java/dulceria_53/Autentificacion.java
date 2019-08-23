@@ -10,77 +10,81 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import dulceria_53.Conexion;
+import java.sql.SQLException;
+import org.apache.commons.dbcp.DelegatingResultSet;
 
 /**
  *
  * @author Gera
  */
 public class Autentificacion {
+
     private String usuario;
     private String clave;
     private Empleado persona;
-    Connection cn;
 
     public Autentificacion(String usuario, String clave) {
         this.usuario = usuario;
         this.clave = clave;
+
     }
-    public boolean validacion(){
-        ResultSet resultado = null;
-        System.out.println("Entro");
-        try {          
-            
-            Statement st;
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            
-            cn = DriverManager.getConnection("jdbc:mysql://localhost/dulceria_53?useSSL=false",
-                    "root", "Esnafer19");
-            //2. Definición de la instrucción
-            st = cn.createStatement();
-            String tsql = "SELECT * FROM Registro where Usuario='"+getUsuario()+"' and Clave='"+getClave()+"';";
-            //3. Ejecución de la instrucción
-            
-            resultado = st.executeQuery(tsql);
-            return (resultado!=null);
+
+    public boolean validacion() throws ClassNotFoundException {
+        Connection cn;
+        
+        try {
+            Conexion c=new Conexion();
+            cn=c.inicializa();
+            if (cn != null) {
+                Statement sta = cn.createStatement();
+                ResultSet res = sta.executeQuery("Select * from Registro where usuario ='" + getUsuario() + "' and clave='" + getClave() + "'");
+                if (res.next()) {
+                    String nombre = res.getString("Nombre");
+                    res.close();
+                    sta.close();
+                    return true;
+                } else {
+                    res.close();
+                    sta.close();
+
+                }
+            }
+            return false;
             //4. Cierre de la conexión
             //cn.close(); 
-        } catch (Exception e) {
-            System.out.println("Error "+e);
+        } catch (SQLException e) {
+            System.out.println("Error " + e);
             return false;
         }
     }
-    
-    public Empleado obtenerDatos(){
-        ResultSet resultado = null;
-        try {           
-            Statement st;
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            cn = DriverManager.getConnection("jdbc:mysql://localhost/dulceria_53?useSSL=falseserverTimezone=UTC", "root", "Esnafer19");
-            //2. Definición de la instrucción
-            st = cn.createStatement();
-            String tsql = "SELECT * FROM Registro where Usuario='"+getUsuario()+"';";
-            //3. Ejecución de la instrucción
-            resultado = st.executeQuery(tsql);
-            if (resultado != null) {
-                while (resultado.next()) {
-                    persona=new Empleado(resultado.getString("ID"),resultado.getString("Nombre"),
-                    resultado.getString("Apellido"),resultado.getString("Usuario"),resultado.getString("Clave"),
-                    resultado.getString("Puesto"),resultado.getString("Imagen"));
-                }
-            }
-            //4. Cierre de la conexión
-            //cn.close(); 
-        } catch (Exception e) {
-            //JOptionPane.showMessageDialog(null, "Error "+e);
-        }
-        return persona;
-    }
-    
+
+//    public Empleado obtenerDatos() {
+//        Connection cn;
+//        Conexion conex = new Conexion();
+//        try {
+//            cn = conex.dataSource.getConnection();
+//                Statement sta = cn.createStatement();
+//                ResultSet resultado = sta.executeQuery("Select * from Registro where usuario ='" + getUsuario() + "'");
+//            //3. Ejecución de la instrucción
+//                if (resultado.next()) {
+//                    persona = new Empleado(resultado.getString("ID"), resultado.getString("Nombre"),
+//                            resultado.getString("Apellido"), resultado.getString("Usuario"), resultado.getString("Clave"),
+//                            resultado.getString("Puesto"), resultado.getString("Imagen"));
+//                }
+//            
+//            //4. Cierre de la conexión
+//            //cn.close(); 
+//        } catch (Exception e) {
+//            //JOptionPane.showMessageDialog(null, "Error "+e);
+//        }
+//        return persona;
+//    }
     public String getUsuario() {
         return usuario;
     }
 
     public String getClave() {
         return clave;
-    }  
+    }
 }
