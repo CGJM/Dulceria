@@ -54,16 +54,15 @@ public class RealizarVenta extends HttpServlet {
             String subtotal = request.getParameter("subtotal");
             out.print(nombre);
             try {
-                st = cn.prepareStatement("insert into Ventas values('" + nombre + "','" + String.valueOf(cantidad) + "','" + subtotal + "','" + id + "');");
+                st = cn.prepareStatement("insert into ventas values('" + nombre + "'," + String.valueOf(cantidad) + "," + subtotal + "," + id + ");");
                 st.executeUpdate();
                 System.out.println("cantidad neta "+cantidadneta);
                 System.out.println("cantidad pedida "+cantidad);
-                int totaluni =cantidadneta - cantidad;
-                System.out.println(cantidadneta);
+                int totaluni =cantidadneta-cantidad;
                 System.out.println("total "+totaluni);
                 cn.close();
                 cn=c.inicializa();
-                st = cn.prepareStatement("update Almacen set cantidad='"+String.valueOf(totaluni)+"' where id='" + id + "'");
+                st = cn.prepareStatement("update almacen set cantidad="+String.valueOf(totaluni)+" where id=" + id + ";");
                 st.executeUpdate();
                 RequestDispatcher rd;
                 rd = request.getRequestDispatcher("./WEB-INF/jsp/Menu.jsp");

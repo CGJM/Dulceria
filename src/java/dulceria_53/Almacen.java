@@ -32,7 +32,7 @@ public class Almacen {
             
             Conexion c=new Conexion();
             cn=c.inicializa();
-            String tsql = "INSERT INTO Almacen values ('" + dulce.getIdPrducto() + "','" + dulce.getNombre() + "'," + dulce.getCantidad()
+            String tsql = "INSERT INTO almacen values ('" + dulce.getIdPrducto() + "','" + dulce.getNombre() + "'," + dulce.getCantidad()
                     + "," + dulce.getPrecio() + ");";
             PreparedStatement s = cn.prepareStatement(tsql);
             s.executeUpdate();
@@ -50,7 +50,7 @@ public class Almacen {
             //1. Conexión con la base de datos
             Statement st;
             st = cn.createStatement();
-            String tsql = "UPDATE Almacen SET Nombre ='" + nombre + "',Cantidad= " + cantidad + ",Precio =" + precio
+            String tsql = "UPDATE almacen SET Nombre ='" + nombre + "',Cantidad= " + cantidad + ",Precio =" + precio
                     + " WHERE ID = '" + idProducto + "';";
             //3. Ejecución de la instrucción
             PreparedStatement s = cn.prepareStatement(tsql);
@@ -69,7 +69,7 @@ public class Almacen {
             //1. Conexión con la base de datos
             Statement st;
             st = cn.createStatement();
-            String tsql = "DELETE FROM  Almacen WHERE Nombre = '" + condicion
+            String tsql = "DELETE FROM  almacen WHERE Nombre = '" + condicion
                     + "';";
             //3. Ejecución de la instrucción
             resultado = st.executeUpdate(tsql);
@@ -86,7 +86,7 @@ public class Almacen {
         try {
             Statement st;
             st = cn.createStatement();
-            String tsql = "SELECT Nombre FROM Almacen;";
+            String tsql = "SELECT Nombre FROM almacen;";
             //3. Ejecución de la instrucción
             resultado = st.executeQuery(tsql);
             //4. Cierre de la conexión
@@ -102,7 +102,7 @@ public class Almacen {
         try {
             Statement st;
             st = cn.createStatement();
-            String tsql = "SELECT * FROM Almacen where Nombre='" + parametro + "';";
+            String tsql = "SELECT * FROM almacen where Nombre='" + parametro + "';";
             //3. Ejecución de la instrucción
             resultado = st.executeQuery(tsql);
             //4. Cierre de la conexión
@@ -118,7 +118,7 @@ public class Almacen {
         try {
             Statement st;
             st = cn.createStatement();
-            String tsql = "SELECT * FROM Almacen;";
+            String tsql = "SELECT * FROM almacen;";
             //3. Ejecución de la instrucción
             resultado = st.executeQuery(tsql);
             //4. Cierre de la conexión
@@ -134,7 +134,7 @@ public class Almacen {
         try {
             Statement st;
             st = cn.createStatement();
-            String tsql = "SELECT ID FROM Almacen where Nombre='" + parametro + "';";
+            String tsql = "SELECT ID FROM almacen where Nombre='" + parametro + "';";
             //3. Ejecución de la instrucción
             resultado = st.executeQuery(tsql);
             //4. Cierre de la conexión

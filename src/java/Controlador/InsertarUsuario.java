@@ -45,9 +45,8 @@ public class InsertarUsuario extends HttpServlet {
             String apellido = request.getParameter("apellido");
             String usuario = request.getParameter("usuario");
             String clave = request.getParameter("clave");
-            String imagen = request.getParameter("Image");
             String combo=request.getParameter("selCombo");
-            persona = new Empleado(id,nombre,apellido, usuario, clave,combo ,imagen);
+            persona = new Empleado(id,nombre,apellido, usuario, clave,combo ,"Hello");
             if (reg.Alta(persona)) {
                 RequestDispatcher rd;
                 rd = request.getRequestDispatcher("./WEB-INF/jsp/Menu.jsp");

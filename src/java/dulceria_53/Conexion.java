@@ -26,15 +26,16 @@ public final class Conexion {
     public String db = "Dulceria";
     public String url = "jdbc:postgresql://localhost/" + db;
     public String user = "postgres";
-    public String pass = "12345";
+    public String pass = "Esnafer19";
 
     public Connection inicializa() {
         
         Connection c=null;
         try{
          Class.forName("org.postgresql.Driver");
-         c=DriverManager.getConnection("jdbc:postgresql://localhost/Dulceria","postgres","12345");
+         c=DriverManager.getConnection(url,user,pass);
         }catch(Exception e){
+            System.out.println("Error Connection "+e);
             e.printStackTrace();
     }
         return c;

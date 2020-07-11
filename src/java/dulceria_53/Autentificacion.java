@@ -30,15 +30,15 @@ public class Autentificacion {
 
     }
 
-    public boolean validacion() throws ClassNotFoundException {
+     public boolean validacion() throws ClassNotFoundException {
         Connection cn;
-        
+        String reg="Registro";
         try {
             Conexion c=new Conexion();
             cn=c.inicializa();
             if (cn != null) {
                 Statement sta = cn.createStatement();
-                ResultSet res = sta.executeQuery("Select * from Registro where usuario ='" + getUsuario() + "' and clave='" + getClave() + "'");
+                ResultSet res = sta.executeQuery("Select * from registro where usuario ='" + getUsuario() + "' and clave='" + getClave() + "';");
                 if (res.next()) {
                     String nombre = res.getString("Nombre");
                     res.close();
@@ -54,7 +54,7 @@ public class Autentificacion {
             //4. Cierre de la conexión
             //cn.close(); 
         } catch (SQLException e) {
-            System.out.println("Error " + e);
+            System.out.println("Error 1" + e);
             return false;
         }
     }
